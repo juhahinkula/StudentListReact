@@ -99,7 +99,7 @@ class Student extends React.Component {
             <td>{this.props.student.lastname}</td>
             <td>{this.props.student.email}</td>
             <td>
-                <button className="btn btn-danger" onClick={this.deleteStudent}>Delete</button>
+                <button className="btn btn-danger btn-xs" onClick={this.deleteStudent}>Delete</button>
             </td>
           </tr>
         );
@@ -149,7 +149,6 @@ class StudentForm extends React.Component {
                 </form>
                 </div>      
             </div>
-         
         );
     }
 }
