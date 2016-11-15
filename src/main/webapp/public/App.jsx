@@ -35,8 +35,8 @@ class App extends React.Component {
   
   // Create new student
   createStudent(student) {
-      fetch('http://localhost:8080/api/students', {
-          method: 'POST',
+      fetch('http://localhost:8080/api/students', 
+      {   method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
