@@ -1,4 +1,5 @@
 *.settings
 *.project
 target/
+node_modules/
 !.mvn/wrapper/maven-wrapper.jar
