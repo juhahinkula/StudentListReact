@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
+import SkyLight from 'react-skylight';
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 
 class App extends React.Component {
   constructor(props) {
@@ -24,7 +28,7 @@ class App extends React.Component {
           this.setState({ 
               students: responseData._embedded.students, 
           }); 
-      });     
+      });
   } 
   
   // Delete student
@@ -34,6 +38,12 @@ class App extends React.Component {
       .then( 
           res => this.loadStudentsFromServer()
       )
+      .then(() => { 
+          Alert.success('Student deleted', {
+            position: 'bottom-left',
+            effect: 'slide'
+          });
+      })
       .catch( err => cosole.error(err))                
   }  
   
@@ -55,8 +65,9 @@ class App extends React.Component {
   render() {
     return (
        <div>
-          <StudentForm createStudent={this.createStudent}/>
           <StudentTable deleteStudent={this.deleteStudent} students={this.state.students}/> 
+          <StudentForm createStudent={this.createStudent}/>
+          <Alert stack={true} timeout={2000} />
        </div>
     );
   }
@@ -129,30 +140,38 @@ class StudentForm extends React.Component {
         event.preventDefault();
         console.log("Firstname: " + this.state.firstname);
         var newStudent = {firstname: this.state.firstname, lastname: this.state.lastname, email: this.state.email};
-        this.props.createStudent(newStudent);        
+        this.props.createStudent(newStudent);    
+        this.refs.simpleDialog.hide();    
     }
     
     render() {
         return (
-            <div className="panel panel-default">
+          <div>
+            <SkyLight hideOnOverlayClicked ref="simpleDialog">
+                <div className="panel panel-default">
                 <div className="panel-heading">Create student</div>
                 <div className="panel-body">
-                <form className="form-inline">
-                    <div className="col-md-2">
+                <form className="form">
+                    <div className="col-md-4">
                         <input type="text" placeholder="Firstname" className="form-control"  name="firstname" onChange={this.handleChange}/>    
                     </div>
-                    <div className="col-md-2">       
+                    <div className="col-md-4">       
                         <input type="text" placeholder="Lastname" className="form-control" name="lastname" onChange={this.handleChange}/>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-4">
                         <input type="text" placeholder="Email" className="form-control" name="email" onChange={this.handleChange}/>
                     </div>
                     <div className="col-md-2">
                         <button className="btn btn-success" onClick={this.handleSubmit}>Save</button>   
-                    </div>        
+                    </div>       
                 </form>
                 </div>      
+                </div>
+            </SkyLight>
+            <div className="col-md-2">
+                <button className="btn btn-success" onClick={() => this.refs.simpleDialog.show()}>New student</button>
             </div>
+          </div>   
         );
     }
 }
