@@ -6,11 +6,13 @@ import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 
+
 class App extends React.Component {
   constructor(props) {
       super(props);
       this.deleteStudent = this.deleteStudent.bind(this);
       this.createStudent = this.createStudent.bind(this);
+
       this.state = {
           students: [],
       };
@@ -22,7 +24,8 @@ class App extends React.Component {
   
   // Load students from database
   loadStudentsFromServer() {
-      fetch('http://localhost:8080/api/students') 
+      fetch('http://localhost:8080/api/students', 
+      {credentials: 'same-origin'}) 
       .then((response) => response.json()) 
       .then((responseData) => { 
           this.setState({ 
@@ -30,11 +33,12 @@ class App extends React.Component {
           }); 
       });
   } 
-  
+
   // Delete student
   deleteStudent(student) {
       fetch (student._links.self.href,
-      { method: 'DELETE',})
+      { method: 'DELETE', 
+        credentials: 'same-origin'})
       .then( 
           res => this.loadStudentsFromServer()
       )
@@ -44,13 +48,14 @@ class App extends React.Component {
             effect: 'slide'
           });
       })
-      .catch( err => cosole.error(err))                
+      .catch( err => console.error(err))                
   }  
   
   // Create new student
   createStudent(student) {
       fetch('http://localhost:8080/api/students', 
-      {   method: 'POST',
+      {   method: 'POST', 
+          credentials: 'same-origin',
           headers: {
             'Content-Type': 'application/json',
           },
@@ -80,7 +85,7 @@ class StudentTable extends React.Component {
     
     render() {
     var students = this.props.students.map(student =>
-        <Student key={student._links.self.href} student={student} deleteStudent={this.props.deleteStudent}/>
+        <Student key={student._links.self.href} student={student}  deleteStudent={this.props.deleteStudent}/>
     );
 
     return (
@@ -106,14 +111,14 @@ class Student extends React.Component {
     deleteStudent() {
         this.props.deleteStudent(this.props.student);
     } 
- 
-    render() {
+
+     render() {
         return (
           <tr>
             <td>{this.props.student.firstname}</td>
             <td>{this.props.student.lastname}</td>
             <td>{this.props.student.email}</td>
-            <td>
+            <td>               
                 <button className="btn btn-danger btn-xs" onClick={this.deleteStudent}>Delete</button>
             </td>
           </tr>
@@ -130,7 +135,6 @@ class StudentForm extends React.Component {
     }
 
     handleChange(event) {
-        console.log("NAME: " + event.target.name + " VALUE: " + event.target.value)
         this.setState(
             {[event.target.name]: event.target.value}
         );
@@ -162,14 +166,14 @@ class StudentForm extends React.Component {
                         <input type="text" placeholder="Email" className="form-control" name="email" onChange={this.handleChange}/>
                     </div>
                     <div className="col-md-2">
-                        <button className="btn btn-success" onClick={this.handleSubmit}>Save</button>   
+                        <button className="btn btn-primary" onClick={this.handleSubmit}>Save</button>   
                     </div>       
                 </form>
                 </div>      
                 </div>
             </SkyLight>
             <div className="col-md-2">
-                <button className="btn btn-success" onClick={() => this.refs.simpleDialog.show()}>New student</button>
+                <button className="btn btn-primary" onClick={() => this.refs.simpleDialog.show()}>New student</button>
             </div>
           </div>   
         );

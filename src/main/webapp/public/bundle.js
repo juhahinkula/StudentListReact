@@ -90,6 +90,7 @@
 
 	        _this.deleteStudent = _this.deleteStudent.bind(_this);
 	        _this.createStudent = _this.createStudent.bind(_this);
+
 	        _this.state = {
 	            students: []
 	        };
@@ -109,7 +110,7 @@
 	        value: function loadStudentsFromServer() {
 	            var _this2 = this;
 
-	            fetch('http://localhost:8080/api/students').then(function (response) {
+	            fetch('http://localhost:8080/api/students', { credentials: 'same-origin' }).then(function (response) {
 	                return response.json();
 	            }).then(function (responseData) {
 	                _this2.setState({
@@ -125,7 +126,8 @@
 	        value: function deleteStudent(student) {
 	            var _this3 = this;
 
-	            fetch(student._links.self.href, { method: 'DELETE' }).then(function (res) {
+	            fetch(student._links.self.href, { method: 'DELETE',
+	                credentials: 'same-origin' }).then(function (res) {
 	                return _this3.loadStudentsFromServer();
 	            }).then(function () {
 	                _reactSAlert2.default.success('Student deleted', {
@@ -133,7 +135,7 @@
 	                    effect: 'slide'
 	                });
 	            }).catch(function (err) {
-	                return cosole.error(err);
+	                return console.error(err);
 	            });
 	        }
 
@@ -145,6 +147,7 @@
 	            var _this4 = this;
 
 	            fetch('http://localhost:8080/api/students', { method: 'POST',
+	                credentials: 'same-origin',
 	                headers: {
 	                    'Content-Type': 'application/json'
 	                },
@@ -307,7 +310,6 @@
 	    _createClass(StudentForm, [{
 	        key: 'handleChange',
 	        value: function handleChange(event) {
-	            console.log("NAME: " + event.target.name + " VALUE: " + event.target.value);
 	            this.setState(_defineProperty({}, event.target.name, event.target.value));
 	        }
 	    }, {
@@ -364,7 +366,7 @@
 	                                    { className: 'col-md-2' },
 	                                    _react2.default.createElement(
 	                                        'button',
-	                                        { className: 'btn btn-success', onClick: this.handleSubmit },
+	                                        { className: 'btn btn-primary', onClick: this.handleSubmit },
 	                                        'Save'
 	                                    )
 	                                )
@@ -377,7 +379,7 @@
 	                    { className: 'col-md-2' },
 	                    _react2.default.createElement(
 	                        'button',
-	                        { className: 'btn btn-success', onClick: function onClick() {
+	                        { className: 'btn btn-primary', onClick: function onClick() {
 	                                return _this9.refs.simpleDialog.show();
 	                            } },
 	                        'New student'

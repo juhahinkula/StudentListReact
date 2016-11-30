@@ -6,6 +6,12 @@
 </head>
 
 <body>
+	<div class="col-md-4" style="padding:10px 10px">
+	    <form th:action="@{/logout}" method="post">
+	        <input type="submit" class="btn btn-danger" value="Log Out"/>
+	    </form>
+	</div>
+
     <div class='container'>
         <div id='root'></div>
 	</div>
