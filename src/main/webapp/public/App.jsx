@@ -6,7 +6,6 @@ import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 
-
 class App extends React.Component {
   constructor(props) {
       super(props);
@@ -157,7 +156,7 @@ class StudentForm extends React.Component {
                 <div className="panel-body">
                 <form className="form">
                     <div className="col-md-4">
-                        <input type="text" placeholder="Firstname" className="form-control"  name="firstname" onChange={this.handleChange}/>    
+                        <Input type="text" placeholder="Firstname" className="form-control"  name="firstname" onChange={this.handleChange}/>    
                     </div>
                     <div className="col-md-4">       
                         <input type="text" placeholder="Lastname" className="form-control" name="lastname" onChange={this.handleChange}/>
