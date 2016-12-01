@@ -5,7 +5,9 @@ Spring Boot + React frontend
 
 Launch by typing: mvnw spring-boot:run
 
-    H2
+Login by using: user/user or admin/admin
+
+    H2 database
     JPA
     REST
     React.js
