@@ -156,7 +156,7 @@ class StudentForm extends React.Component {
                 <div className="panel-body">
                 <form className="form">
                     <div className="col-md-4">
-                        <Input type="text" placeholder="Firstname" className="form-control"  name="firstname" onChange={this.handleChange}/>    
+                        <input type="text" placeholder="Firstname" className="form-control"  name="firstname" onChange={this.handleChange}/>    
                     </div>
                     <div className="col-md-4">       
                         <input type="text" placeholder="Lastname" className="form-control" name="lastname" onChange={this.handleChange}/>

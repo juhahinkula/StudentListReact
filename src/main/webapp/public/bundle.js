@@ -349,7 +349,7 @@
 	                                _react2.default.createElement(
 	                                    'div',
 	                                    { className: 'col-md-4' },
-	                                    _react2.default.createElement(Input, { type: 'text', placeholder: 'Firstname', className: 'form-control', name: 'firstname', onChange: this.handleChange })
+	                                    _react2.default.createElement('input', { type: 'text', placeholder: 'Firstname', className: 'form-control', name: 'firstname', onChange: this.handleChange })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
