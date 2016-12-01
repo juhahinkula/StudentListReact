@@ -11,7 +11,7 @@ Login by using: user/user or admin/admin
     JPA
     REST
     React.js
-    React components: Skylight (for modals), react-s-alert (for toasts)
+    React components: react-skylight (for modals), react-s-alert (for toasts)
     
 ##Screenshot##
 
