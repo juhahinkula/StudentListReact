@@ -1,9 +1,13 @@
 # SpringBootReact
-Spring Boot + React.js
+Spring Boot + React.js frontend
 
-Spring Boot + React frontend
-
-Launch by typing: mvnw spring-boot:run
+How to Launch: 
+1. Install npm packages
+npm install
+2. Run webpack
+webpack
+3.Run the application
+mvnw spring-boot:run
 
 Login by using: user/user or admin/admin
 
@@ -13,7 +17,7 @@ Login by using: user/user or admin/admin
     React.js
     React components: react-skylight (for modals), react-s-alert (for toasts)
     
-##Screenshot##
+Screenshots
 
 ![Screenshot](http://juhahinkula.github.com/img/springreactlist.png)
 
