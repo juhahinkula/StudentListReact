@@ -227,7 +227,7 @@ class StudentUpdateForm extends React.Component {
           <div>
             <SkyLight hideOnOverlayClicked ref="editDialog">
                 <div className="panel panel-default">
-                <div className="panel-heading">Create student</div>
+                <div className="panel-heading">Edit student</div>
                 <div className="panel-body">
                 <form className="form">
                     <div className="col-md-4">
