@@ -90,6 +90,7 @@
 
 	        _this.deleteStudent = _this.deleteStudent.bind(_this);
 	        _this.createStudent = _this.createStudent.bind(_this);
+	        _this.updateStudent = _this.updateStudent.bind(_this);
 
 	        _this.state = {
 	            students: []
@@ -155,7 +156,27 @@
 	            }).then(function (res) {
 	                return _this4.loadStudentsFromServer();
 	            }).catch(function (err) {
-	                return cosole.error(err);
+	                return console.error(err);
+	            });
+	        }
+
+	        // Update student
+
+	    }, {
+	        key: 'updateStudent',
+	        value: function updateStudent(student) {
+	            var _this5 = this;
+
+	            fetch(student.link, { method: 'PUT',
+	                credentials: 'same-origin',
+	                headers: {
+	                    'Content-Type': 'application/json'
+	                },
+	                body: JSON.stringify(student)
+	            }).then(function (res) {
+	                return _this5.loadStudentsFromServer();
+	            }).catch(function (err) {
+	                return console.error(err);
 	            });
 	        }
 	    }, {
@@ -164,7 +185,7 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement(StudentTable, { deleteStudent: this.deleteStudent, students: this.state.students }),
+	                _react2.default.createElement(StudentTable, { deleteStudent: this.deleteStudent, updateStudent: this.updateStudent, students: this.state.students }),
 	                _react2.default.createElement(StudentForm, { createStudent: this.createStudent }),
 	                _react2.default.createElement(_reactSAlert2.default, { stack: true, timeout: 2000 })
 	            );
@@ -186,10 +207,10 @@
 	    _createClass(StudentTable, [{
 	        key: 'render',
 	        value: function render() {
-	            var _this6 = this;
+	            var _this7 = this;
 
 	            var students = this.props.students.map(function (student) {
-	                return _react2.default.createElement(Student, { key: student._links.self.href, student: student, deleteStudent: _this6.props.deleteStudent });
+	                return _react2.default.createElement(Student, { key: student._links.self.href, student: student, updateStudent: _this7.props.updateStudent, deleteStudent: _this7.props.deleteStudent });
 	            });
 
 	            return _react2.default.createElement(
@@ -245,10 +266,11 @@
 	    function Student(props) {
 	        _classCallCheck(this, Student);
 
-	        var _this7 = _possibleConstructorReturn(this, (Student.__proto__ || Object.getPrototypeOf(Student)).call(this, props));
+	        var _this8 = _possibleConstructorReturn(this, (Student.__proto__ || Object.getPrototypeOf(Student)).call(this, props));
 
-	        _this7.deleteStudent = _this7.deleteStudent.bind(_this7);
-	        return _this7;
+	        _this8.state = { editShow: false };
+	        _this8.deleteStudent = _this8.deleteStudent.bind(_this8);
+	        return _this8;
 	    }
 
 	    _createClass(Student, [{
@@ -280,6 +302,11 @@
 	                _react2.default.createElement(
 	                    'td',
 	                    null,
+	                    _react2.default.createElement(StudentUpdateForm, { updateStudent: this.props.updateStudent, student: this.props.student })
+	                ),
+	                _react2.default.createElement(
+	                    'td',
+	                    null,
 	                    _react2.default.createElement(
 	                        'button',
 	                        { className: 'btn btn-danger btn-xs', onClick: this.deleteStudent },
@@ -299,12 +326,12 @@
 	    function StudentForm(props) {
 	        _classCallCheck(this, StudentForm);
 
-	        var _this8 = _possibleConstructorReturn(this, (StudentForm.__proto__ || Object.getPrototypeOf(StudentForm)).call(this, props));
+	        var _this9 = _possibleConstructorReturn(this, (StudentForm.__proto__ || Object.getPrototypeOf(StudentForm)).call(this, props));
 
-	        _this8.state = { firstname: '', lastname: '', email: '' };
-	        _this8.handleSubmit = _this8.handleSubmit.bind(_this8);
-	        _this8.handleChange = _this8.handleChange.bind(_this8);
-	        return _this8;
+	        _this9.state = { firstname: '', lastname: '', email: '' };
+	        _this9.handleSubmit = _this9.handleSubmit.bind(_this9);
+	        _this9.handleChange = _this9.handleChange.bind(_this9);
+	        return _this9;
 	    }
 
 	    _createClass(StudentForm, [{
@@ -324,7 +351,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this9 = this;
+	            var _this10 = this;
 
 	            return _react2.default.createElement(
 	                'div',
@@ -380,7 +407,7 @@
 	                    _react2.default.createElement(
 	                        'button',
 	                        { className: 'btn btn-primary', onClick: function onClick() {
-	                                return _this9.refs.simpleDialog.show();
+	                                return _this10.refs.simpleDialog.show();
 	                            } },
 	                        'New student'
 	                    )
@@ -390,6 +417,104 @@
 	    }]);
 
 	    return StudentForm;
+	}(_react2.default.Component);
+
+	var StudentUpdateForm = function (_React$Component5) {
+	    _inherits(StudentUpdateForm, _React$Component5);
+
+	    function StudentUpdateForm(props) {
+	        _classCallCheck(this, StudentUpdateForm);
+
+	        var _this11 = _possibleConstructorReturn(this, (StudentUpdateForm.__proto__ || Object.getPrototypeOf(StudentUpdateForm)).call(this, props));
+
+	        _this11.state = { firstname: _this11.props.student.firstname, lastname: _this11.props.student.lastname, email: _this11.props.student.email };
+	        _this11.handleSubmit = _this11.handleSubmit.bind(_this11);
+	        _this11.handleChange = _this11.handleChange.bind(_this11);
+	        return _this11;
+	    }
+
+	    _createClass(StudentUpdateForm, [{
+	        key: 'handleChange',
+	        value: function handleChange(event) {
+	            this.setState(_defineProperty({}, event.target.name, event.target.value));
+	        }
+	    }, {
+	        key: 'handleSubmit',
+	        value: function handleSubmit(event) {
+	            event.preventDefault();
+	            var updStudent = { link: this.props.student._links.self.href, firstname: this.state.firstname, lastname: this.state.lastname, email: this.state.email };
+	            this.props.updateStudent(updStudent);
+	            this.refs.editDialog.hide();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this12 = this;
+
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    _reactSkylight2.default,
+	                    { hideOnOverlayClicked: true, ref: 'editDialog' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'panel panel-default' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'panel-heading' },
+	                            'Create student'
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'panel-body' },
+	                            _react2.default.createElement(
+	                                'form',
+	                                { className: 'form' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-md-4' },
+	                                    _react2.default.createElement('input', { type: 'text', placeholder: 'Firstname', className: 'form-control', name: 'firstname', value: this.state.firstname, onChange: this.handleChange })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-md-4' },
+	                                    _react2.default.createElement('input', { type: 'text', placeholder: 'Lastname', className: 'form-control', name: 'lastname', value: this.state.lastname, onChange: this.handleChange })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-md-4' },
+	                                    _react2.default.createElement('input', { type: 'text', placeholder: 'Email', className: 'form-control', name: 'email', value: this.state.email, onChange: this.handleChange })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-md-2' },
+	                                    _react2.default.createElement(
+	                                        'button',
+	                                        { className: 'btn btn-primary', onClick: this.handleSubmit },
+	                                        'Save'
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'col-md-2' },
+	                    _react2.default.createElement(
+	                        'button',
+	                        { className: 'btn btn-primary btn-xs', onClick: function onClick() {
+	                                return _this12.refs.editDialog.show();
+	                            } },
+	                        'Update'
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return StudentUpdateForm;
 	}(_react2.default.Component);
 
 	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('root'));
