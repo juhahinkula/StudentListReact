@@ -463,7 +463,7 @@
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'panel-heading' },
-	                            'Create student'
+	                            'Edit student'
 	                        ),
 	                        _react2.default.createElement(
 	                            'div',
