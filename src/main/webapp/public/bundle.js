@@ -501,13 +501,13 @@
 	                ),
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'col-md-2' },
+	                    null,
 	                    _react2.default.createElement(
 	                        'button',
 	                        { className: 'btn btn-primary btn-xs', onClick: function onClick() {
 	                                return _this12.refs.editDialog.show();
 	                            } },
-	                        'Update'
+	                        'Edit'
 	                    )
 	                )
 	            );

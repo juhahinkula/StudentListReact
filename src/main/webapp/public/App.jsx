@@ -246,8 +246,8 @@ class StudentUpdateForm extends React.Component {
                 </div>      
                 </div>
             </SkyLight>
-            <div className="col-md-2">
-                <button className="btn btn-primary btn-xs" onClick={() => this.refs.editDialog.show()}>Update</button>
+            <div>
+                <button className="btn btn-primary btn-xs" onClick={() => this.refs.editDialog.show()}>Edit</button>
             </div>
           </div>   
         );
